@@ -44,5 +44,6 @@ func (uc *CreateTransactionUseCase) Execute(input CreateTransactionInputDTO) (*C
 	if err != nil {
 		return nil, err
 	}
-	return &CreateTransactionOutputDTO{ID: transaction.ID}, nil
+	output := &CreateTransactionOutputDTO{ID: transaction.ID}
+	return output, nil
 }
