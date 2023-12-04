@@ -12,5 +12,16 @@ POST http://localhost:8080/accounts HTTP/1.1
 Content-Type: application/json
 
 {
-    "client_id": "c54d206c-7c59-4947-a28b-d753c0f33656"
+    "client_id": "612dd168-e110-4e7a-b122-755532995e22"
+}
+
+###
+
+POST http://localhost:8080/transactions HTTP/1.1
+Content-Type: application/json
+
+{
+    "account_id_from": "dc92e321-b2b1-45af-910e-598aab680f45",
+    "account_id_to": "612dd168-e110-4e7a-b122-755532995e22",
+    "amount": 50
 }

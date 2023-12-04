@@ -1,8 +1,6 @@
 package createclient
 
 import (
-	"time"
-
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/entity"
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/gateway"
 )
@@ -16,8 +14,8 @@ type CreateClientOutputDTO struct {
 	ID        string
 	Name      string
 	Email     string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt string
+	UpdatedAt string
 }
 
 type CreateClientUseCase struct {
@@ -40,9 +38,9 @@ func (uc *CreateClientUseCase) Execute(input CreateClientInputDTO) (*CreateClien
 		return nil, err
 	}
 	return &CreateClientOutputDTO{
-		ID:   client.ID,
-		Name: client.Name,
-		Email: client.Email,
+		ID:        client.ID,
+		Name:      client.Name,
+		Email:     client.Email,
 		CreatedAt: client.CreatedAt,
 		UpdatedAt: client.UpdatedAt,
 	}, nil
