@@ -12,16 +12,17 @@ type Transaction struct {
 	AccountFrom *Account
 	AccountTo   *Account
 	Amount      float64
-	CreatedAt   time.Time
+	CreatedAt   string
 }
 
 func NewTransaction(accountFrom *Account, accountTo *Account, amount float64) (*Transaction, error) {
+	currentTime := time.Now()
 	transaction := &Transaction{
 		ID:          uuid.New().String(),
 		AccountFrom: accountFrom,
 		AccountTo:   accountTo,
 		Amount:      amount,
-		CreatedAt:   time.Now(),
+		CreatedAt:   currentTime.Format("2006-01-02T15:04:05"),
 	}
 	err := transaction.Validate()
 	if err != nil {

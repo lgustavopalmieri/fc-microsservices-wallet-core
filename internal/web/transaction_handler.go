@@ -4,21 +4,21 @@ import (
 	"encoding/json"
 	"net/http"
 
-	createtransaction "github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/usecase/create_transaction"
+	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/usecase/create_transaction"
 )
 
 type WebTransactionHandler struct {
-	CreateTransactionUseCase createtransaction.CreateTransactionUseCase
+	CreateTransactionUseCase create_transaction.CreateTransactionUseCase
 }
 
-func NewWebTransactionHandler(createTransactionUseCase createtransaction.CreateTransactionUseCase) *WebTransactionHandler{
+func NewWebTransactionHandler(createTransactionUseCase create_transaction.CreateTransactionUseCase) *WebTransactionHandler {
 	return &WebTransactionHandler{
 		CreateTransactionUseCase: createTransactionUseCase,
 	}
 }
 
 func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
-	var dto createtransaction.CreateTransactionInputDTO
+	var dto create_transaction.CreateTransactionInputDTO
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -26,10 +26,12 @@ func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http
 	}
 	output, err := h.CreateTransactionUseCase.Execute(dto)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 		return
 	}
-	w.Header().Set("Content-Type", "applications/json")
+
+	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(output)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

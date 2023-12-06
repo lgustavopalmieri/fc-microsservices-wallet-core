@@ -11,11 +11,12 @@ type Account struct {
 	Client    *Client
 	ClientID  string
 	Balance   float64
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt string
+	UpdatedAt string
 }
 
 func NewAccount(client *Client) *Account {
+	currentTime := time.Now()
 	if client == nil {
 		return nil
 	}
@@ -23,18 +24,21 @@ func NewAccount(client *Client) *Account {
 		ID:        uuid.New().String(),
 		Client:    client,
 		Balance:   0,
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		CreatedAt: currentTime.Format("2006-01-02T15:04:05"),
+		UpdatedAt: currentTime.Format("2006-01-02T15:04:05"),
 	}
+
 	return account
 }
 
 func (a *Account) Credit(amount float64) {
+	currentTime := time.Now()
 	a.Balance += amount
-	a.UpdatedAt = time.Now()
+	a.UpdatedAt = currentTime.Format("2006-01-02T15:04:05")
 }
 
 func (a *Account) Debit(amount float64) {
+	currentTime := time.Now()
 	a.Balance -= amount
-	a.UpdatedAt = time.Now()
+	a.UpdatedAt = currentTime.Format("2006-01-02T15:04:05")
 }

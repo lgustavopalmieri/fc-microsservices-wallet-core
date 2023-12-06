@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/entity"
 )
@@ -19,6 +20,7 @@ func NewTransactionDB(db *sql.DB) *TransactionDB {
 func (t *TransactionDB) Create(transaction *entity.Transaction) error {
 	stmt, err := t.DB.Prepare("INSERT INTO transactions (id, account_id_from, account_id_to, amount, created_at) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
+		fmt.Print("erro aqui")
 		return err
 	}
 	defer stmt.Close()
