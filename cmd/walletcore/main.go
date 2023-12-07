@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/database"
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/event"
 	createaccount "github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/usecase/create_account"
@@ -12,7 +14,7 @@ import (
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/web"
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/internal/web/webserver"
 	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/pkg/events"
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/lgustavopalmieri/fc-microsservice-wallet-core/pkg/uow"
 )
 
 func main() {
@@ -27,11 +29,22 @@ func main() {
 	// eventDispatcher.Register("TransactionCreated", handler)
 	clientDb := database.NewClientDB(db)
 	accountDb := database.NewAccountDB(db)
-	transactionDb := database.NewTransactionDB(db)
+	//transactionDb := database.NewTransactionDB(db)
+
+	ctx := context.Background()
+	uow := uow.NewUow(ctx, db)
+
+	uow.Register("AccountDB", func(tx *sql.Tx) interface{} {
+		return database.NewAccountDB(db)
+	})
+
+	uow.Register("TransactionDB", func(tx *sql.Tx) interface{} {
+		return database.NewTransactionDB(db)
+	})
 
 	createClientUseCase := createclient.NewCreateClientUseCase(clientDb)
 	createAccountUseCase := createaccount.NewCreateAccountUseCase(accountDb, clientDb)
-	createTransactionUseCase := createtransaction.NewCreateTransactionUseCase(transactionDb, accountDb, eventDispatcher, transactionCreatedEvent)
+	createTransactionUseCase := createtransaction.NewCreateTransactionUseCase(uow, eventDispatcher, transactionCreatedEvent)
 
 	webserver := webserver.NewWebServer(":8080")
 
