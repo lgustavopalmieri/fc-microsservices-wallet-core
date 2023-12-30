@@ -2,8 +2,8 @@ POST http://localhost:8080/clients HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "BubaDoe",
-    "email": "buba@j.com"
+    "name": "JaneDoe",
+    "email": "jane@j.com"
 }
 
 ###
@@ -12,7 +12,7 @@ POST http://localhost:8080/accounts HTTP/1.1
 Content-Type: application/json
 
 {
-    "client_id": "9a2aede1-6b04-4dd8-b29a-e47e32d49de2"
+    "client_id": "a2f3b72f-c20a-4e07-a1c2-e6d839b84952"
 }
 
 ###
@@ -21,7 +21,7 @@ POST http://localhost:8080/transactions HTTP/1.1
 Content-Type: application/json
 
 {
-    "account_id_from": "66d48f06-4aa0-4c3b-afae-79a0b724dd57",
-    "account_id_to": "1799feea-75b2-45f3-9210-a41b42bb3184",
+    "account_id_from": "abfe8897-5b87-4248-b6f7-a1275b8bc755",
+    "account_id_to": "37165448-b271-4ff4-a7ad-31be0e9a1b36",
     "amount": 50
 }

@@ -2,20 +2,14 @@ docker-compose exec mysql bash
 
 mysql -uroot -p wallet
 
-Create table clients (id VARCHAR(255), name varchar(255), email varchar(255), created_at varchar(255));
-
-Create table accounts (id varchar(255), client_id varchar(255), balance int, created_at TIMESTAMP);
-
-
-Create table transactions (id varchar(255), account_id_from varchar(255), account_id_to varchar(255), amount int, created_at TIMESTAMP);
-
-update accounts set balance=100 where id="9a2aede1-6b04-4dd8-b29a-e47e32d49de2";
-
-
-
-
 CREATE TABLE clients (id VARCHAR(255),name VARCHAR(255),email VARCHAR(255),created_at TIMESTAMP);
 
 CREATE TABLE accounts (id VARCHAR(255), client_id VARCHAR(255), balance FLOAT, created_at TIMESTAMP);
 
 CREATE TABLE transactions (id VARCHAR(255), account_id_from VARCHAR(255), account_id_to VARCHAR(255), amount FLOAT, created_at TIMESTAMP);
+
+update accounts set balance=100 where id="abfe8897-5b87-4248-b6f7-a1275b8bc755";
+
+
+
+
